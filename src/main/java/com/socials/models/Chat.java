@@ -4,11 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,6 +31,13 @@ public class Chat {
 	
 	@ManyToMany
 	private List<User> users = new ArrayList<>(); //2 users -- between whom chat taking place
+
+	/*
+	when we give mappedBy="chat" it doesn't create
+	a separate table (message_chat)
+	 */
+	@OneToMany(mappedBy = "chat")
+	private List<Message> messages = new ArrayList<>();
 	
 	private LocalDateTime createdAt;
 	
