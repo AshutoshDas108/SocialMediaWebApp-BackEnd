@@ -33,7 +33,7 @@ public class MessageServiceImpl implements MessageService{
         createdMessage.setChat(chat);
         createdMessage.setContent(message.getContent());
         createdMessage.setImage(message.getImage());
-        createdMessage.setUser(message.getUser());
+        createdMessage.setUser(user);
         createdMessage.setTimeStamp(LocalDateTime.now());
 
         Message savedMessage = messageRepository.save(createdMessage);
