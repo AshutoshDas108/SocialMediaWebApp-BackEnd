@@ -2,6 +2,8 @@ package com.socials.controller;
 
 import java.util.List;
 
+import com.socials.exceptions.ChatException;
+import com.socials.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +28,7 @@ public class ChatController {
 	
 	@PostMapping("/api/chats")
 	public Chat createChat(@RequestHeader("Authorization") String jwt, 
-			                 @RequestBody ChatRequest req) throws Exception {
+			                 @RequestBody ChatRequest req) throws  UserException {
 		
 		User reqUser = userservice.findUserByJwt(jwt);
 		User user2 = userservice.findUserById(req.getUserId());
@@ -37,7 +39,7 @@ public class ChatController {
 	
 	
 	@GetMapping("/api/chats")
-	public List<Chat> findUserChat(@RequestHeader("Authorization") String jwt){
+	public List<Chat> findUserChat(@RequestHeader("Authorization") String jwt) throws UserException {
 		
 		User user = userservice.findUserByJwt(jwt);
 		

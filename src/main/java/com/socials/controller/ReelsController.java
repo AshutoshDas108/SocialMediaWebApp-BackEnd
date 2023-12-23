@@ -2,6 +2,8 @@ package com.socials.controller;
 
 import java.util.List;
 
+import com.socials.exceptions.ReelsException;
+import com.socials.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class ReelsController {
 	
 	@PostMapping("api/reels")
 	public Reels createReels(@RequestBody Reels reel, 
-			@RequestHeader("Authorization")String jwt) {
+			@RequestHeader("Authorization")String jwt) throws UserException {
 		
 		
 		User reqUser = userservice.findUserByJwt(jwt);
@@ -40,7 +42,7 @@ public class ReelsController {
 	
 	
 	@GetMapping("api/reels")
-	public List<Reels> findAllreels() {
+	public List<Reels> findAllReels() {
 		
 		List<Reels> reels = reelsService.findAllReels();
 		
@@ -52,7 +54,7 @@ public class ReelsController {
 	
 	
 	@GetMapping("api/reels/user/{userId}")
-	public List<Reels> findUserreels(@PathVariable Integer userId) throws Exception {
+	public List<Reels> findUserReels(@PathVariable Integer userId) throws ReelsException, UserException {
 		
 		List<Reels> reels = reelsService.findUsersReel(userId);
 		

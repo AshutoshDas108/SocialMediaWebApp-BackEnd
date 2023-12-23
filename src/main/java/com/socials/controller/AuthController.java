@@ -1,5 +1,6 @@
 package com.socials.controller;
 
+import com.socials.exceptions.AuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,12 +37,12 @@ public class AuthController {
 	// Actual end point :  localhost:5454/auth/signup
 	
 	@PostMapping("/signup")
-	public AuthResponse createUser(@RequestBody User user) throws Exception {
+	public AuthResponse createUser(@RequestBody User user) throws AuthException {
 		
 		User isExist = userRepository.findByEmail(user.getEmail());
 		
 		if(isExist != null) {
-			throw new Exception("Email Already Exists, Try with another Email");
+			throw new AuthException("Email Already Exists, Try with another Email");
 		}
 		
 		User newUser = new User();

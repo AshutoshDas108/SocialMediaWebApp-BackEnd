@@ -3,6 +3,8 @@ package com.socials.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.socials.exceptions.StoryException;
+import com.socials.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,9 +36,12 @@ public class StoryServiceImpl implements StoryService {
 	}
 
 	@Override
-	public List<Story> findStoryByUserId(Integer userId) throws Exception {
+	public List<Story> findStoryByUserId(Integer userId) throws UserException, StoryException {
 		userservice.findUserById(userId);
 		List<Story> stories = storyRepository.findByUserId(userId);
+		if(stories.isEmpty()){
+			throw new StoryException("No Stories Found for user with Id:"+userId);
+		}
 		return stories;
 	}
 

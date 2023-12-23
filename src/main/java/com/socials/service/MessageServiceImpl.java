@@ -1,5 +1,7 @@
 package com.socials.service;
 
+import com.socials.exceptions.ChatException;
+import com.socials.exceptions.MessageException;
 import com.socials.models.Chat;
 import com.socials.models.Message;
 import com.socials.models.User;
@@ -25,7 +27,7 @@ public class MessageServiceImpl implements MessageService{
 
 
     @Override
-    public Message createMessage(User user, Integer chatId, Message message) throws Exception {
+    public Message createMessage(User user, Integer chatId, Message message) throws  ChatException {
 
         Chat chat = chatService.findChatById(chatId);
 
@@ -43,7 +45,7 @@ public class MessageServiceImpl implements MessageService{
     }
 
     @Override
-    public List<Message> findChatsMessages(Integer chatId) throws Exception {
+    public List<Message> findChatsMessages(Integer chatId) throws ChatException {
         //Already handles exception --> if no chat exist throws exception
         Chat chat = chatService.findChatById(chatId);
         return messageRepository.findByChatId(chatId);

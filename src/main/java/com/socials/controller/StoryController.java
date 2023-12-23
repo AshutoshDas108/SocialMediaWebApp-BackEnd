@@ -2,6 +2,8 @@ package com.socials.controller;
 
 import java.util.List;
 
+import com.socials.exceptions.StoryException;
+import com.socials.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class StoryController {
 	
 	@PostMapping("api/story")
 	public Story createStory(@RequestBody Story story, 
-			@RequestHeader("Authorization") String jwt) {
+			@RequestHeader("Authorization") String jwt) throws UserException {
 		
 		User reqUser = userservice.findUserByJwt(jwt);
 		
@@ -39,11 +41,11 @@ public class StoryController {
 	
 	@GetMapping("api/story/user/{userId}")
 	public List<Story> findUserStory(@PathVariable Integer userId, 
-			@RequestHeader("Authorization") String jwt) throws Exception {
+			@RequestHeader("Authorization") String jwt) throws StoryException, UserException {
 		
 		User reqUser = userservice.findUserByJwt(jwt);
 		
-		List<Story> stories = storyService.findStoryByUserId(reqUser.getId());
+		List<Story> stories = storyService.findStoryByUserId(userId);
 		
 		return stories;
 	}

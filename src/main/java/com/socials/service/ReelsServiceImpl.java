@@ -2,6 +2,7 @@ package com.socials.service;
 
 import java.util.List;
 
+import com.socials.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class ReelsServiceImpl implements ReelsService {
 	}
 
 	@Override
-	public List<Reels> findUsersReel(Integer userId) throws Exception {
+	public List<Reels> findUsersReel(Integer userId) throws UserException {
 		//automatically throws exception if there is no user
 		userservice.findUserById(userId);
 		return reelsRepository.findByUserId(userId);

@@ -3,6 +3,9 @@ package com.socials.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.socials.exceptions.CommentException;
+import com.socials.exceptions.PostException;
+import com.socials.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +36,7 @@ public class CommentServiceImpl implements CommentService{
 	
 
 	@Override
-	public Comment createComment(Comment comment, Integer postId, Integer userId) throws Exception {
+	public Comment createComment(Comment comment, Integer postId, Integer userId) throws UserException, PostException {
 		
 		User user = userservice.findUserById(userId);
 		
@@ -55,19 +58,19 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public Comment findCommentById(Integer commentId) throws Exception {
+	public Comment findCommentById(Integer commentId) throws CommentException {
 		
 		Optional<Comment> opt = commentRepository.findById(commentId);
 		
 		if(opt.isEmpty()) {
-			throw new Exception("Comment not found");
+			throw new CommentException("Comment not found");
 		}
 	
 		return opt.get();
 	}
 
 	@Override
-	public Comment likeComment(Integer commentId, Integer userId) throws Exception {
+	public Comment likeComment(Integer commentId, Integer userId) throws CommentException, UserException {
 		
 		Comment comment = findCommentById(commentId);
 		

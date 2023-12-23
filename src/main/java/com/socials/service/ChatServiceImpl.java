@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.socials.exceptions.ChatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,11 +42,11 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public Chat findChatById(Integer chatId) throws Exception {
+	public Chat findChatById(Integer chatId) throws ChatException {
 		Optional<Chat> opt = chatRepository.findById(chatId);
 		
 		if(opt.isEmpty()) {
-			throw new Exception("Chat not Found with Id : " + chatId);
+			throw new ChatException("Chat not Found with Id : " + chatId);
 		}
 		
 		return opt.get();

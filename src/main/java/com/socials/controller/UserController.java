@@ -2,6 +2,7 @@ package com.socials.controller;
 
 import java.util.List;
 
+import com.socials.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +54,7 @@ public class UserController {
 	@PutMapping("/api/users")
 	public User updateUser(@RequestHeader("Authorization")String jwt, @RequestBody User user) throws Exception {
 		
-		//only logged in user aloowed to update not other user
+		//only logged in user allowed to update not other user
 		User reqUser = userService.findUserByJwt(jwt);
 		
 		
@@ -83,15 +84,15 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/api/users/{id}")
-	public String delteUser(@PathVariable("id") Integer id) {
-		
+	public String deleteUser(@PathVariable("id") Integer id) {
+
 		return "user deleted successfully";
 		
 	}
 	
 	
 	@GetMapping("api/user/profile")
-	public User getUserFromToken(@RequestHeader("Authorization") String jwt) {
+	public User getUserFromToken(@RequestHeader("Authorization") String jwt) throws UserException {
 		User user = userService.findUserByJwt(jwt);
 		user.setPassword(null);
 		return user;

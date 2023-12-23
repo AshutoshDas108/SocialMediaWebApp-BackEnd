@@ -3,6 +3,7 @@ package com.socials.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.socials.exceptions.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +36,14 @@ public class UserServiceImpl implements Userservice{
 
 	
 	@Override
-	public User findUserById(Integer userId) throws Exception {
+	public User findUserById(Integer userId) throws UserException {
 		
 
 		Optional<User> user = userRepository.findById(userId);
 		if(user.isPresent())
 			return user.get();
 		
-		throw new Exception("User Not Found with " + userId);
+		throw new UserException("User Not Found with " + userId);
 		
 	}
 
@@ -59,10 +60,10 @@ public class UserServiceImpl implements Userservice{
 	
 	/*	  
 	  reqUser wants to follow user2
-	  So, rewuser must be logged in user	  
+	  So, reqUser must be logged in user
 	  */
 	@Override
-	public User followUser(Integer reqUserId, Integer userId2) throws Exception {
+	public User followUser(Integer reqUserId, Integer userId2) throws UserException {
 		
 		User reqUser = findUserById(reqUserId);
 		
@@ -80,10 +81,10 @@ public class UserServiceImpl implements Userservice{
 
 	
 	@Override
-	public User updateUser(Integer id, User user) throws Exception {
+	public User updateUser(Integer id, User user) throws UserException {
 		Optional<User> user1 = userRepository.findById(id);
 		if(user1.isEmpty()) {
-			throw new Exception("User does not exist with " + id);
+			throw new UserException("User does not exist with " + id);
 		}
 		
 		User oldUser = user1.get();
@@ -115,9 +116,12 @@ public class UserServiceImpl implements Userservice{
 
 
 	@Override
-	public User findUserByJwt(String jwt) {
+	public User findUserByJwt(String jwt) throws UserException {
 		String email = JwtProvider.getEmailFromJwtToken(jwt);
 		User user = findUserByEmail(email);
+		if(user==null){
+			throw new UserException("User not found with email :" + email);
+		}
 		return user;
 	}
 
