@@ -32,11 +32,11 @@ public class PostController {
 	
 	
 	/*
-	Logged in user can create post 
+	Logged-in user can create post
 	only from his/her account
 	*/
 	
-	@PostMapping("/api/post/user")
+	@PostMapping("/api/posts")
 	public ResponseEntity<Post> createPost(@RequestBody Post post, 
 			                               @RequestHeader("Authorization")String jwt)
 			                            		   throws Exception{
@@ -51,7 +51,7 @@ public class PostController {
 	
 	
 	/*
-	Logged in user can delete post only
+	Logged-in user can delete post only
 	from his own account
 	*/
 	
@@ -106,7 +106,7 @@ public class PostController {
 	
 	
 	/*
-	Logged in user can save post only
+	Logged-in user can save post only
 	to his own account
 	*/
 	
@@ -127,7 +127,7 @@ public class PostController {
 	
 	
 	/*
-	Logged in user can like post only
+	Logged-in user can like post only
 	from his own account
 	*/
 	
