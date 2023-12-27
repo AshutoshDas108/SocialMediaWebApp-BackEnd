@@ -12,7 +12,7 @@ import io.jsonwebtoken.security.Keys;
 
 public class JwtProvider {
 	
-	private static SecretKey  key = Keys.hmacShaKeyFor(JwtConstant.SECREAT_KEY.getBytes());
+	private static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECREAT_KEY.getBytes());
 	
 	public static String generateToken(Authentication auth) {
 		

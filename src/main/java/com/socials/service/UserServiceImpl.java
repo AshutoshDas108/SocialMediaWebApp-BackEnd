@@ -60,7 +60,7 @@ public class UserServiceImpl implements Userservice{
 	
 	/*	  
 	  reqUser wants to follow user2
-	  So, reqUser must be logged in user
+	  So, reqUser must be logged-in user
 	  */
 	@Override
 	public User followUser(Integer reqUserId, Integer userId2) throws UserException {
