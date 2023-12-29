@@ -54,7 +54,7 @@ public class UserController {
 	@PutMapping("/api/users")
 	public User updateUser(@RequestHeader("Authorization")String jwt, @RequestBody User user) throws Exception {
 		
-		//only logged in user allowed to update not other user
+		//only logged-in user allowed updating not other user
 		User reqUser = userService.findUserByJwt(jwt);
 		
 		
